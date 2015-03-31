@@ -1,0 +1,7 @@
+[user]
+	email = ericskaggs@gmail.com
+	name = eric skaggs
+[push]
+	default = simple
+[core]
+	excludesfile = /Users/erskaggs/.gitignore_global
