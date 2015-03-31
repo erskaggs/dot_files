@@ -1,5 +1,14 @@
+" Maintainer:	Phil Cryer <phil@philcryer.com>
+" Last change:	2012 Sep 5
+"
+" (Original) Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last change:	2002 Sep 19
+"
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
+"	      for Amiga:  s:.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"	    for OpenVMS:  sys$login:.vimrc
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
@@ -109,7 +118,9 @@ set fo=tcq
 set modeline
 set bg=dark
 
+execute pthogen#infect()
 syntax on
+filetype plugin indent on
 
 " set default comment color to cyan instead of darkblue
 " which is not very legible on a black background
