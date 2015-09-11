@@ -1,0 +1,42 @@
+{
+  "name": "ansible-snippets",
+  "main": "./lib/ansible-snippets",
+  "version": "0.2.0",
+  "description": "Ansible Snippets",
+  "activationCommands": {
+    "atom-workspace": "ansible-snippets:toggle"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skord/atom-ansible-snippets.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "dependencies": {},
+  "readme": "# ansible-snippets package\n\nSnippets for Ansible\n\n![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/skord/atom-ansible-snippets/issues"
+  },
+  "homepage": "https://github.com/skord/atom-ansible-snippets#readme",
+  "_id": "ansible-snippets@0.2.0",
+  "_shasum": "8052135433765098b2d2f5b6dcf5c36ac6c99ce9",
+  "_resolved": "file:../d-115811-68695-sx52ja/package.tgz",
+  "_from": "../d-115811-68695-sx52ja/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".coffee": [
+        "lib/ansible-snippets-view.coffee",
+        "lib/ansible-snippets.coffee"
+      ],
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}
