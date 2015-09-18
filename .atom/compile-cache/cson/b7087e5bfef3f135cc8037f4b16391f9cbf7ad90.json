@@ -1,1 +1,0 @@
-{".source.yaml":{"getUrl":{"prefix":"get_url","body":"- name: $1\n  get_url:\n    url: $2\n    dest: $3\n    owner: $4\n    group: $5\n    mode: $6"}}}

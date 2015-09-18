@@ -1,1 +1,0 @@
-{"scopeName":"source.ansible.tm-language","name":"PackageName","fileTypes":["extension"],"patterns":[{"match":"^\\s*@@.*$","name":"comment"}]}

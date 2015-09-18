@@ -1,1 +1,0 @@
-{".source.yaml":{"dir":{"prefix":"dir","body":"- name: $1\n  file:\n    path: $2\n    state: directory\n    owner: $3\n    group: $4\n    recurse: $5"},"template":{"prefix":"temp","body":"- name: $1\n  template:\n    src: $2\n    dest: $3\n    owner: $4\n    group: $5\n    mode: $6\n    backup: $7\n    validate: $8"}}}
