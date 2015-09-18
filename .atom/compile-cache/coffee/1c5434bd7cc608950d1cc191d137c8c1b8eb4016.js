@@ -1,0 +1,140 @@
+(function() {
+  var TreeViewGitStatus, fs, path, temp;
+
+  TreeViewGitStatus = require('../lib/main');
+
+  fs = require('fs-plus');
+
+  path = require('path');
+
+  temp = require('temp').track();
+
+  describe("TreeViewGitStatus", function() {
+    var extractGitRepoFixture, fixturesPath, gitStatus, treeView, validateProjectPaths, workspaceElement, _ref;
+    _ref = [], workspaceElement = _ref[0], gitStatus = _ref[1], treeView = _ref[2], fixturesPath = _ref[3];
+    beforeEach(function() {
+      fixturesPath = atom.project.getPaths()[0];
+      atom.project.removePath(fixturesPath);
+      workspaceElement = atom.views.getView(atom.workspace);
+      jasmine.attachToDOM(workspaceElement);
+      return waitsForPromise(function() {
+        return atom.packages.activatePackage('tree-view-git-status').then(function(pkg) {
+          gitStatus = pkg.mainModule;
+          treeView = gitStatus.treeView;
+          return gitStatus.ignoreRepository((path.resolve(fixturesPath, '..', '..').split(path.sep)).join('/'));
+        });
+      });
+    });
+    afterEach(function() {
+      return temp.cleanup();
+    });
+    it('activates the TreeViewGitStatus package', function() {
+      expect(gitStatus).toBeDefined();
+      return expect(gitStatus.treeView).toBeDefined();
+    });
+    it('adds valid Git repositories to the repository map', function() {
+      var projPaths;
+      projPaths = [extractGitRepoFixture(fixturesPath, 'git-project')];
+      atom.project.setPaths(projPaths);
+      validateProjectPaths(projPaths);
+      expect(gitStatus.toggled).toBe(true);
+      expect(atom.project.getRepositories().length).toBe(1);
+      return expect(gitStatus.repositoryMap.size).toBe(1);
+    });
+    it('disables the TreeViewGitStatus when toggled', function() {
+      var projPaths, root, rootPath, _i, _j, _len, _len1, _ref1, _ref2;
+      projPaths = [extractGitRepoFixture(fixturesPath, 'git-project')];
+      atom.project.setPaths(projPaths);
+      validateProjectPaths(projPaths);
+      expect(gitStatus.toggled).toBe(true);
+      expect(gitStatus.repositoryMap.size).toBe(1);
+      _ref1 = treeView.roots;
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        root = _ref1[_i];
+        rootPath = gitStatus.normalizePath(root.directoryName.dataset.path);
+        expect(gitStatus.repositoryMap.has(rootPath)).toBe(true);
+        expect(root.header.querySelector('span.tree-view-git-status')).toExist();
+      }
+      gitStatus.toggle();
+      _ref2 = treeView.roots;
+      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+        root = _ref2[_j];
+        expect(root.header.querySelector('span.tree-view-git-status')).not.toExist();
+      }
+      expect(gitStatus.toggled).toBe(false);
+      expect(gitStatus.subscriptions.disposed).toBe(true);
+      expect(gitStatus.repositorySubscriptions.disposed).toBe(true);
+      expect(gitStatus.repositoryMap.size).toBe(0);
+      return expect(gitStatus.ignoredRepositories.size).not.toBeNull();
+    });
+    it('skips adding the TreeViewGitStatus on none Git projects', function() {
+      var projPaths, root, _i, _len, _ref1, _results;
+      projPaths = [path.join(fixturesPath, 'none-git-project')];
+      atom.project.setPaths(projPaths);
+      validateProjectPaths(projPaths);
+      expect(gitStatus.toggled).toBe(true);
+      _ref1 = treeView.roots;
+      _results = [];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        root = _ref1[_i];
+        _results.push(expect(root.header.querySelector('span.tree-view-git-status')).not.toExist());
+      }
+      return _results;
+    });
+    describe('when deactivated', function() {
+      beforeEach(function() {
+        var projPaths;
+        projPaths = [extractGitRepoFixture(fixturesPath, 'git-project')];
+        atom.project.setPaths(projPaths);
+        validateProjectPaths(projPaths);
+        expect(gitStatus.toggled).toBe(true);
+        expect(atom.project.getRepositories().length).toBe(1);
+        return runs(function() {
+          return gitStatus.deactivate();
+        });
+      });
+      it('destroys the TreeViewGitStatus instance', function() {
+        expect(gitStatus.active).toBe(false);
+        expect(gitStatus.toggled).toBe(false);
+        expect(gitStatus.subscriptions).toBeNull();
+        expect(gitStatus.treeView).toBeNull();
+        expect(gitStatus.repositorySubscriptions).toBeNull();
+        expect(gitStatus.treeViewRootsMap).toBeNull();
+        expect(gitStatus.repositoryMap).toBeNull();
+        return expect(gitStatus.ignoredRepositories).toBeNull();
+      });
+      return it('destroys the Git Status elements that were added to the DOM', function() {
+        var root, _i, _len, _ref1, _results;
+        _ref1 = treeView.roots;
+        _results = [];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          root = _ref1[_i];
+          _results.push(expect(root.header.querySelector('span.tree-view-git-status')).not.toExist());
+        }
+        return _results;
+      });
+    });
+    extractGitRepoFixture = function(fixturesPath, dotGitFixture) {
+      var dotGit, dotGitFixturePath;
+      dotGitFixturePath = path.join(fixturesPath, dotGitFixture, 'git.git');
+      dotGit = path.join(temp.mkdirSync('repo'), '.git');
+      fs.copySync(dotGitFixturePath, dotGit);
+      return path.resolve(dotGit, '..');
+    };
+    return validateProjectPaths = function(projPaths) {
+      var pPath, _i, _len, _ref1;
+      expect(atom.project.getPaths().length).toBe(projPaths.length);
+      _ref1 = atom.project.getPaths();
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        pPath = _ref1[_i];
+        expect(projPaths.indexOf(pPath)).toBeGreaterThan(-1);
+      }
+      return expect(treeView.roots.length).toBe(projPaths.length);
+    };
+  });
+
+}).call(this);
+
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAiZmlsZSI6ICIiLAogICJzb3VyY2VSb290IjogIiIsCiAgInNvdXJjZXMiOiBbCiAgICAiL1VzZXJzL2Vyc2thZ2dzLy5hdG9tL3BhY2thZ2VzL3RyZWUtdmlldy1naXQtc3RhdHVzL3NwZWMvdHJlZS12aWV3LWdpdC1zdGF0dXMtc3BlYy5jb2ZmZWUiCiAgXSwKICAibmFtZXMiOiBbXSwKICAibWFwcGluZ3MiOiAiQUFBQTtBQUFBLE1BQUEsaUNBQUE7O0FBQUEsRUFBQSxpQkFBQSxHQUFvQixPQUFBLENBQVEsYUFBUixDQUFwQixDQUFBOztBQUFBLEVBQ0EsRUFBQSxHQUFLLE9BQUEsQ0FBUSxTQUFSLENBREwsQ0FBQTs7QUFBQSxFQUVBLElBQUEsR0FBTyxPQUFBLENBQVEsTUFBUixDQUZQLENBQUE7O0FBQUEsRUFHQSxJQUFBLEdBQU8sT0FBQSxDQUFRLE1BQVIsQ0FBZSxDQUFDLEtBQWhCLENBQUEsQ0FIUCxDQUFBOztBQUFBLEVBVUEsUUFBQSxDQUFTLG1CQUFULEVBQThCLFNBQUEsR0FBQTtBQUM1QixRQUFBLHNHQUFBO0FBQUEsSUFBQSxPQUF3RCxFQUF4RCxFQUFDLDBCQUFELEVBQW1CLG1CQUFuQixFQUE4QixrQkFBOUIsRUFBd0Msc0JBQXhDLENBQUE7QUFBQSxJQUVBLFVBQUEsQ0FBVyxTQUFBLEdBQUE7QUFDVCxNQUFBLFlBQUEsR0FBZSxJQUFJLENBQUMsT0FBTyxDQUFDLFFBQWIsQ0FBQSxDQUF3QixDQUFBLENBQUEsQ0FBdkMsQ0FBQTtBQUFBLE1BQ0EsSUFBSSxDQUFDLE9BQU8sQ0FBQyxVQUFiLENBQXdCLFlBQXhCLENBREEsQ0FBQTtBQUFBLE1BR0EsZ0JBQUEsR0FBbUIsSUFBSSxDQUFDLEtBQUssQ0FBQyxPQUFYLENBQW1CLElBQUksQ0FBQyxTQUF4QixDQUhuQixDQUFBO0FBQUEsTUFJQSxPQUFPLENBQUMsV0FBUixDQUFvQixnQkFBcEIsQ0FKQSxDQUFBO2FBTUEsZUFBQSxDQUFnQixTQUFBLEdBQUE7ZUFDZCxJQUFJLENBQUMsUUFB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
+
+//# sourceURL=/Users/erskaggs/.atom/packages/tree-view-git-status/spec/tree-view-git-status-spec.coffee

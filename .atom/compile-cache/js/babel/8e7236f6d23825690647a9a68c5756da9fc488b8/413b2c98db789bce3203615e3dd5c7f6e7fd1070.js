@@ -1,0 +1,17 @@
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports.addEventListener = addEventListener;
+
+var _atom = require('atom');
+
+'use babel';
+
+function addEventListener(el, event, cb) {
+  el.addEventListener(event, cb);
+  return new _atom.Disposable(function () {
+    return el.removeEventListener(event, cb);
+  });
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9lcnNrYWdncy8uYXRvbS9wYWNrYWdlcy90cmVlLXZpZXctZ2l0LWJyYW5jaC9saWIvdXRpbHMuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7b0JBQzJCLE1BQU07O0FBRGpDLFdBQVcsQ0FBQzs7QUFHTCxTQUFTLGdCQUFnQixDQUFDLEVBQUUsRUFBRSxLQUFLLEVBQUUsRUFBRSxFQUFFO0FBQzlDLElBQUUsQ0FBQyxnQkFBZ0IsQ0FBQyxLQUFLLEVBQUUsRUFBRSxDQUFDLENBQUM7QUFDL0IsU0FBTyxxQkFBZTtXQUFNLEVBQUUsQ0FBQyxtQkFBbUIsQ0FBQyxLQUFLLEVBQUUsRUFBRSxDQUFDO0dBQUEsQ0FBQyxDQUFDO0NBQ2hFIiwiZmlsZSI6Ii9Vc2Vycy9lcnNrYWdncy8uYXRvbS9wYWNrYWdlcy90cmVlLXZpZXctZ2l0LWJyYW5jaC9saWIvdXRpbHMuanMiLCJzb3VyY2VzQ29udGVudCI6WyIndXNlIGJhYmVsJztcbmltcG9ydCB7IERpc3Bvc2FibGUgfSBmcm9tICdhdG9tJztcblxuZXhwb3J0IGZ1bmN0aW9uIGFkZEV2ZW50TGlzdGVuZXIoZWwsIGV2ZW50LCBjYikge1xuICBlbC5hZGRFdmVudExpc3RlbmVyKGV2ZW50LCBjYik7XG4gIHJldHVybiBuZXcgRGlzcG9zYWJsZSgoKSA9PiBlbC5yZW1vdmVFdmVudExpc3RlbmVyKGV2ZW50LCBjYikpO1xufVxuIl19
+//# sourceURL=/Users/erskaggs/.atom/packages/tree-view-git-branch/lib/utils.js

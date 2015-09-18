@@ -1,0 +1,28 @@
+(function() {
+  var git, readGitInfo;
+
+  git = require('git-utils');
+
+  readGitInfo = function(path) {
+    var repository, result;
+    repository = git.open(path);
+    result = {
+      branch: repository.getShortHead(),
+      dirty: Object.keys(repository.getStatus()).length !== 0
+    };
+    repository.release();
+    return result;
+  };
+
+  module.exports = function(path) {
+    var callback;
+    callback = this.async();
+    emit('result', readGitInfo(path));
+    return callback();
+  };
+
+}).call(this);
+
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAiZmlsZSI6ICIiLAogICJzb3VyY2VSb290IjogIiIsCiAgInNvdXJjZXMiOiBbCiAgICAiL1VzZXJzL2Vyc2thZ2dzLy5hdG9tL3BhY2thZ2VzL2dpdC1wcm9qZWN0cy9saWIvcmVhZC1naXQtaW5mby10YXNrLmNvZmZlZSIKICBdLAogICJuYW1lcyI6IFtdLAogICJtYXBwaW5ncyI6ICJBQUFBO0FBQUEsTUFBQSxnQkFBQTs7QUFBQSxFQUFBLEdBQUEsR0FBTSxPQUFBLENBQVEsV0FBUixDQUFOLENBQUE7O0FBQUEsRUFFQSxXQUFBLEdBQWMsU0FBQyxJQUFELEdBQUE7QUFDWixRQUFBLGtCQUFBO0FBQUEsSUFBQSxVQUFBLEdBQWEsR0FBRyxDQUFDLElBQUosQ0FBUyxJQUFULENBQWIsQ0FBQTtBQUFBLElBQ0EsTUFBQSxHQUNFO0FBQUEsTUFBQSxNQUFBLEVBQVEsVUFBVSxDQUFDLFlBQVgsQ0FBQSxDQUFSO0FBQUEsTUFDQSxLQUFBLEVBQU8sTUFBTSxDQUFDLElBQVAsQ0FBWSxVQUFVLENBQUMsU0FBWCxDQUFBLENBQVosQ0FBbUMsQ0FBQyxNQUFwQyxLQUE4QyxDQURyRDtLQUZGLENBQUE7QUFBQSxJQUtBLFVBQVUsQ0FBQyxPQUFYLENBQUEsQ0FMQSxDQUFBO0FBTUEsV0FBTyxNQUFQLENBUFk7RUFBQSxDQUZkLENBQUE7O0FBQUEsRUFXQSxNQUFNLENBQUMsT0FBUCxHQUFpQixTQUFDLElBQUQsR0FBQTtBQUdmLFFBQUEsUUFBQTtBQUFBLElBQUEsUUFBQSxHQUFXLElBQUMsQ0FBQSxLQUFELENBQUEsQ0FBWCxDQUFBO0FBQUEsSUFDQSxJQUFBLENBQUssUUFBTCxFQUFlLFdBQUEsQ0FBWSxJQUFaLENBQWYsQ0FEQSxDQUFBO1dBRUEsUUFBQSxDQUFBLEVBTGU7RUFBQSxDQVhqQixDQUFBO0FBQUEiCn0=
+
+//# sourceURL=/Users/erskaggs/.atom/packages/git-projects/lib/read-git-info-task.coffee

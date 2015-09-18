@@ -1,0 +1,1 @@
+{".source.yaml":{"service":{"prefix":"serv","body":"- name: $1\n  service:\n    name: $2\n    state: $3\n    enabled: $4"}}}

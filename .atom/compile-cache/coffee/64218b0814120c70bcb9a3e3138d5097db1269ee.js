@@ -1,0 +1,32 @@
+(function() {
+  var GitDiff, git, gitStat;
+
+  git = require('../git');
+
+  GitDiff = require('./git-diff');
+
+  gitStat = function(repo) {
+    var args;
+    args = ['diff', '--stat'];
+    if (atom.config.get('git-plus.includeStagedDiff')) {
+      args.push('HEAD');
+    }
+    return git.cmd({
+      args: args,
+      cwd: repo.getWorkingDirectory(),
+      stdout: function(data) {
+        return GitDiff(repo, {
+          diffStat: data,
+          file: '.'
+        });
+      }
+    });
+  };
+
+  module.exports = gitStat;
+
+}).call(this);
+
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAiZmlsZSI6ICIiLAogICJzb3VyY2VSb290IjogIiIsCiAgInNvdXJjZXMiOiBbCiAgICAiL1VzZXJzL2Vyc2thZ2dzLy5hdG9tL3BhY2thZ2VzL2dpdC1wbHVzL2xpYi9tb2RlbHMvZ2l0LWRpZmYtYWxsLmNvZmZlZSIKICBdLAogICJuYW1lcyI6IFtdLAogICJtYXBwaW5ncyI6ICJBQUFBO0FBQUEsTUFBQSxxQkFBQTs7QUFBQSxFQUFBLEdBQUEsR0FBTSxPQUFBLENBQVEsUUFBUixDQUFOLENBQUE7O0FBQUEsRUFDQSxPQUFBLEdBQVUsT0FBQSxDQUFRLFlBQVIsQ0FEVixDQUFBOztBQUFBLEVBR0EsT0FBQSxHQUFVLFNBQUMsSUFBRCxHQUFBO0FBQ1IsUUFBQSxJQUFBO0FBQUEsSUFBQSxJQUFBLEdBQU8sQ0FBQyxNQUFELEVBQVMsUUFBVCxDQUFQLENBQUE7QUFDQSxJQUFBLElBQW9CLElBQUksQ0FBQyxNQUFNLENBQUMsR0FBWixDQUFnQiw0QkFBaEIsQ0FBcEI7QUFBQSxNQUFBLElBQUksQ0FBQyxJQUFMLENBQVUsTUFBVixDQUFBLENBQUE7S0FEQTtXQUVBLEdBQUcsQ0FBQyxHQUFKLENBQ0U7QUFBQSxNQUFBLElBQUEsRUFBTSxJQUFOO0FBQUEsTUFDQSxHQUFBLEVBQUssSUFBSSxDQUFDLG1CQUFMLENBQUEsQ0FETDtBQUFBLE1BRUEsTUFBQSxFQUFRLFNBQUMsSUFBRCxHQUFBO2VBQVUsT0FBQSxDQUFRLElBQVIsRUFBYztBQUFBLFVBQUEsUUFBQSxFQUFVLElBQVY7QUFBQSxVQUFnQixJQUFBLEVBQU0sR0FBdEI7U0FBZCxFQUFWO01BQUEsQ0FGUjtLQURGLEVBSFE7RUFBQSxDQUhWLENBQUE7O0FBQUEsRUFXQSxNQUFNLENBQUMsT0FBUCxHQUFpQixPQVhqQixDQUFBO0FBQUEiCn0=
+
+//# sourceURL=/Users/erskaggs/.atom/packages/git-plus/lib/models/git-diff-all.coffee

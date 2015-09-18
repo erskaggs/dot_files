@@ -1,0 +1,1 @@
+{"context-menu":{"atom-text-editor":[{"label":"Toggle ansible-snippets","command":"ansible-snippets:toggle"}]},"menu":[{"label":"Packages","submenu":[{"label":"ansible-snippets","submenu":[{"label":"Toggle","command":"ansible-snippets:toggle"}]}]}]}
