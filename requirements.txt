@@ -85,7 +85,7 @@ Twisted==13.2.0
 ujson==1.35
 urllib3==1.9.1
 virtualenv==13.1.1
-waitress==0.8.10
+waitress==1.4.0
 WebOb==1.5.1
 WebTest==2.0.20
 Werkzeug==0.10.4
