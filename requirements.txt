@@ -69,7 +69,7 @@ pyzmq==15.2.0
 reportbug==6.6.3
 requests==2.7.0
 roman==2.0.0
-rsa==3.2
+rsa==4.1
 s3transfer==0.0.1
 scapy==2.3.2
 scrape==0.8.6
