@@ -1,6 +1,6 @@
 alabaster==0.7.6
 altgraph==0.10.2
-ansible==1.8
+ansible==2.10.0
 astroid==1.4.4
 awscli==1.8.9
 Babel==2.0
