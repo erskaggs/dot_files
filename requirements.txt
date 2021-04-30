@@ -81,7 +81,7 @@ sphinx-rtd-theme==0.1.9
 SQLAlchemy==1.0.12
 tempora==1.4
 tox==2.3.1
-Twisted==13.2.0
+Twisted==20.3.0
 ujson==1.35
 urllib3==1.9.1
 virtualenv==13.1.1
