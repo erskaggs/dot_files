@@ -25,7 +25,7 @@ futures==3.0.5
 gevent==1.0.2
 git-review==1.25.0
 greenlet==0.4.9
-html5lib==0.999
+html5lib==0.999999999
 httpie==0.9.3
 inflect==0.2.5
 irc==14.0
