@@ -30,7 +30,7 @@ httpie==0.9.3
 inflect==0.2.5
 irc==14.0
 itsdangerous==0.24
-Jinja2==2.8
+Jinja2==2.11.3
 lazy-object-proxy==1.2.1
 loads==0.3
 macholib==1.5.1
